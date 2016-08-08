@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<rf2CoreSnapshotStatedRels>/Users/ar/Downloads/SnomedCT_RF2Release_INT_20160731/Snapshot/Terminology/sct2_StatedRelationship_Snapshot_INT_20160731.txt</rf2CoreSnapshotStatedRels>
+	<rf2CoreSnapshotConcepts>/Users/ar/Downloads/SnomedCT_RF2Release_INT_20160731/Snapshot/Terminology/sct2_Concept_Snapshot_INT_20160731.txt</rf2CoreSnapshotConcepts>
+	<rf2ExtensionSnapshotStatedRels>/Users/ar/Downloads/US Edition/SnomedCT_RF2Release_US1000124_20160901/extension/Snapshot/Terminology/sct2_StatedRelationship_ExtensionSnapshot_US1000124_20160901.txt</rf2ExtensionSnapshotStatedRels>
+	<releaseDate>20160901</releaseDate>
+</parameters>
