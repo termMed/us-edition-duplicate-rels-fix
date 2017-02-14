@@ -20,6 +20,7 @@
  */
 package com.termmed.utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,6 +42,8 @@ import com.termmed.configuration.Parameters;
  * The Class FixRels.
  */
 public class FixRels {
+
+	private static final String DUPLICATE_RELS_FILE = "duplicate_rels.txt";
 
 	/** The logger. */
 	private static Logger logger;
@@ -104,11 +107,96 @@ public class FixRels {
 
 		HashSet<String>duplRels=checkDuplicateRelatioship(extRels,coreRels);
 
-		writeRelsInactivation(duplRels,"duplicate_rels.txt",config.getReleaseDate());
+		writeRelsInactivation(duplRels);
 
+		consolidateStatedRels(duplRels);
+		
 		HashSet<String>otherRels=checkOthersRelationshipsFromCoreConcept(extRels,config.getRf2CoreSnapshotConcepts(),duplRels);
 
 		writeRels(otherRels,"core_sourceId_rels.txt");
+	}
+
+	private void consolidateStatedRels(HashSet<String> rels) throws IOException {
+		File outputFile=new File(Constants.OUTPUT_FOLDER,new File(config.getRf2ExtensionSnapshotStatedRels()).getName());
+		BufferedWriter bw = FileHelper.getWriter(outputFile);
+
+		HashSet<String>relIds=new HashSet<String>();
+		String[] spl;
+		for(String rel:rels){
+			spl=rel.split("\t",-1);
+			relIds.add(spl[0]);
+		}
+		
+		BufferedReader br = FileHelper.getReader(new File(config.getRf2ExtensionSnapshotStatedRels()));
+		br.readLine();
+		bw.append(Constants.RELS_HEADER);
+		bw.append("\r\n");
+		String line;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (relIds.contains(spl[0])){
+				continue;
+			}else{
+				bw.append(line);
+				bw.append("\r\n");
+			}
+		}
+		bw.close();
+		br.close();
+		
+		HashSet<File> hFile=new HashSet<File>();
+		hFile.add(new File(Constants.OUTPUT_FOLDER,DUPLICATE_RELS_FILE));
+		hFile.add(outputFile);
+		
+		FileHelper.concatFile(hFile, outputFile);
+		
+		outputFile=new File(Constants.OUTPUT_FOLDER,new File(config.getRf2ExtensionFullStatedRels()).getName());
+		bw = FileHelper.getWriter(outputFile);
+		br = FileHelper.getReader(new File(config.getRf2ExtensionFullStatedRels()));
+		br.readLine();
+		bw.append(Constants.RELS_HEADER);
+		bw.append("\r\n");
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (relIds.contains(spl[0]) && spl[1].equals(config.getReleaseDate())){
+				continue;
+			}else{
+				bw.append(line);
+				bw.append("\r\n");
+			}
+		}
+		bw.close();
+		br.close();
+		
+		hFile=new HashSet<File>();
+		hFile.add(new File(Constants.OUTPUT_FOLDER,DUPLICATE_RELS_FILE));
+		hFile.add(outputFile);
+		
+		FileHelper.concatFile(hFile, outputFile);
+		
+		outputFile=new File(Constants.OUTPUT_FOLDER,new File(config.getRf2ExtensionDeltaStatedRels()).getName());
+		bw = FileHelper.getWriter(outputFile);
+		br = FileHelper.getReader(new File(config.getRf2ExtensionDeltaStatedRels()));
+		br.readLine();
+		bw.append(Constants.RELS_HEADER);
+		bw.append("\r\n");
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (relIds.contains(spl[0])){
+				continue;
+			}else{
+				bw.append(line);
+				bw.append("\r\n");
+			}
+		}
+		bw.close();
+		br.close();
+		
+		hFile=new HashSet<File>();
+		hFile.add(new File(Constants.OUTPUT_FOLDER,DUPLICATE_RELS_FILE));
+		hFile.add(outputFile);
+		
+		FileHelper.concatFile(hFile, outputFile);
 	}
 
 	/**
@@ -121,7 +209,7 @@ public class FixRels {
 	 * @throws FileNotFoundException the file not found exception
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private void writeRelsInactivation(HashSet<String> rels, String filename, String releaseDate) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+	private void writeRelsInactivation(HashSet<String> rels) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 		HashSet<String> rows=new HashSet<String>();
 		String[] spl;
 		StringBuffer row;
@@ -142,7 +230,7 @@ public class FixRels {
 			}
 			rows.add(row.toString());
 		}
-		writeRels(rows,filename);
+		writeRels(rows,DUPLICATE_RELS_FILE);
 	}
 
 	/**
@@ -161,7 +249,6 @@ public class FixRels {
 		HashMap<Long, List<String>> coreConcept = FileHelper.loadFile(rf2CoreSnapshotConcepts, Constants.SCTID_COLUMN_IX, null);
 
 		for(Long id:extRels.keySet()){
-			coreConcept.get(id);
 			if (coreConcept.get(id)!=null ){
 				List<String> extensionRels = extRels.get(id);
 

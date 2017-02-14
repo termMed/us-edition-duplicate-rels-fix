@@ -2,6 +2,8 @@
 <parameters>
 	<rf2CoreSnapshotStatedRels>/Users/ar/Downloads/SnomedCT_RF2Release_INT_20160731/Snapshot/Terminology/sct2_StatedRelationship_Snapshot_INT_20160731.txt</rf2CoreSnapshotStatedRels>
 	<rf2CoreSnapshotConcepts>/Users/ar/Downloads/SnomedCT_RF2Release_INT_20160731/Snapshot/Terminology/sct2_Concept_Snapshot_INT_20160731.txt</rf2CoreSnapshotConcepts>
-	<rf2ExtensionSnapshotStatedRels>/Users/ar/Downloads/US Edition/SnomedCT_RF2Release_US1000124_20160901/extension/Snapshot/Terminology/sct2_StatedRelationship_ExtensionSnapshot_US1000124_20160901.txt</rf2ExtensionSnapshotStatedRels>
+	<rf2ExtensionSnapshotStatedRels>/Users/ar/Downloads/US Edition/Snomed_CT_20160901_TermMed_2/extSnap/Terminology/sct2_StatedRelationship_ExtensionSnapshot_US1000124_20160901.txt</rf2ExtensionSnapshotStatedRels>
+	<rf2ExtensionFullStatedRels>/Users/ar/Downloads/US Edition/Snomed_CT_20160901_TermMed_2/ext/Terminology/sct2_StatedRelationship_ExtensionFull_US1000124_20160901.txt</rf2ExtensionFullStatedRels>
+	<rf2ExtensionDeltaStatedRels>/Users/ar/Downloads/US Edition/Snomed_CT_20160901_TermMed_2/delta/Terminology/sct2_StatedRelationship_Delta_US1000124_20160901.txt</rf2ExtensionDeltaStatedRels>
 	<releaseDate>20160901</releaseDate>
 </parameters>

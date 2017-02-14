@@ -41,6 +41,8 @@ public class Parameters {
 
 	/** The rf2 extension snapshot stated rels. */
 	private String rf2ExtensionSnapshotStatedRels;
+	private String rf2ExtensionFullStatedRels;
+	private String rf2ExtensionDeltaStatedRels;
 	
 	/** The release date. */
 	private String releaseDate;
@@ -115,6 +117,22 @@ public class Parameters {
 	 */
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
+	}
+
+	public String getRf2ExtensionFullStatedRels() {
+		return rf2ExtensionFullStatedRels;
+	}
+
+	public void setRf2ExtensionFullStatedRels(String rf2ExtensionFullStatedRels) {
+		this.rf2ExtensionFullStatedRels = rf2ExtensionFullStatedRels;
+	}
+
+	public String getRf2ExtensionDeltaStatedRels() {
+		return rf2ExtensionDeltaStatedRels;
+	}
+
+	public void setRf2ExtensionDeltaStatedRels(String rf2ExtensionDeltaStatedRels) {
+		this.rf2ExtensionDeltaStatedRels = rf2ExtensionDeltaStatedRels;
 	}
 	
 	
